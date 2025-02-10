@@ -1,42 +1,39 @@
-import React,{ useEffect, useState }from 'react';
-import {Table} from 'react-bootstrap';
-
-import {Button,ButtonToolbar } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Table, Button, ButtonToolbar } from 'react-bootstrap';
 import { FaEdit } from 'react-icons/fa';
 import { RiDeleteBin5Line } from 'react-icons/ri';
-import AddStudentModal from "./AddStudentModal";
-import UpdateStudentModal from "./UpdateStudentModal";
-import { getStudents, deleteStudent } from '../services/StudentService';
-
+import AddProductModal from "./AddProductModal"; // Remplace l'ancien AddStudentModal
+import UpdateProductModal from "./UpdateProductModal"; // Remplace l'ancien UpdateStudentModal
+import { getProducts, deleteProduct } from '../services/ProductService'; // Utilise ProductService
 
 const Manage = () => {
-    const [students, setStudents] = useState([]);
+    const [products, setProducts] = useState([]);
     const [addModalShow, setAddModalShow] = useState(false);
     const [editModalShow, setEditModalShow] = useState(false);
-    const [editStudent, setEditStudent] = useState([]);
+    const [editProduct, setEditProduct] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
 
     useEffect(() => {
-       let mounted = true;
-       if(students.length && !isUpdated) {
-        return;
+        let mounted = true;
+        if (products.length && !isUpdated) {
+            return;
         }
-       getStudents()
-         .then(data => {
-           if(mounted) {
-             setStudents(data);
-           }
-         })
-       return () => {
-          mounted = false;
-          setIsUpdated(false);
-       }
-     }, [isUpdated, students])
+        getProducts()
+            .then(data => {
+                if (mounted) {
+                    setProducts(data);
+                }
+            });
+        return () => {
+            mounted = false;
+            setIsUpdated(false);
+        }
+    }, [isUpdated, products]);
 
-    const handleUpdate = (e, stu) => {
+    const handleUpdate = (e, product) => {
         e.preventDefault();
         setEditModalShow(true);
-        setEditStudent(stu);
+        setEditProduct(product);
     };
 
     const handleAdd = (e) => {
@@ -44,73 +41,73 @@ const Manage = () => {
         setAddModalShow(true);
     };
 
-    const handleDelete = (e, studentId) => {
-        if(window.confirm('Are you sure ?')){
+    const handleDelete = (e, productId) => {
+        if (window.confirm('Are you sure you want to delete this product?')) {
             e.preventDefault();
-            deleteStudent(studentId)
-            .then((result)=>{
-                alert(result);
-                setIsUpdated(true);
-            },
-            (error)=>{
-                alert("Failed to Delete Student");
-            })
+            deleteProduct(productId)
+                .then((result) => {
+                    alert(result);
+                    setIsUpdated(true);
+                },
+                (error) => {
+                    alert("Failed to delete product");
+                });
         }
     };
 
-    let AddModelClose=()=>setAddModalShow(false);
-    let EditModelClose=()=>setEditModalShow(false);
-    return(
+    let AddModelClose = () => setAddModalShow(false);
+    let EditModelClose = () => setEditModalShow(false);
+
+    return (
         <div className="container-fluid side-container">
-        <div className="row side-row" >
-        <p id="manage"></p>
-            <Table striped bordered hover className="react-bootstrap-table" id="dataTable">
-                <thead>
-                <tr>
-                  <th >ID</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Registration No</th>
-                  <th>Email</th>
-                  <th>Course</th>
-                  <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                  { students.map((stu) =>
-
-                  <tr key={stu.id}>
-                  <td>{stu.studentId}</td>
-                  <td>{stu.FirstName}</td>
-                  <td>{stu.LastName}</td>
-                  <td>{stu.RegistrationNo}</td>
-                  <td>{stu.Email}</td>
-                  <td>{stu.Course}</td>
-                  <td>
-
-                  <Button className="mr-2" variant="danger"
-                    onClick={event => handleDelete(event,stu.studentId)}>
-                        <RiDeleteBin5Line />
-                  </Button>
-                  <span>&nbsp;&nbsp;&nbsp;</span>
-                  <Button className="mr-2"
-                    onClick={event => handleUpdate(event,stu)}>
-                        <FaEdit />
-                  </Button>
-                  <UpdateStudentModal show={editModalShow} student={editStudent} setUpdated={setIsUpdated}
-                              onHide={EditModelClose}></UpdateStudentModal>
-                </td>
-                </tr>)}
-              </tbody>
-            </Table>
-            <ButtonToolbar>
-                <Button variant="primary" onClick={handleAdd}>
-                Add Student
-                </Button>
-                <AddStudentModal show={addModalShow} setUpdated={setIsUpdated}
-                onHide={AddModelClose}></AddStudentModal>
-            </ButtonToolbar>
-        </div>
+            <div className="row side-row">
+                <p id="manage"></p>
+                <Table striped bordered hover className="react-bootstrap-table" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Date of Buying</th>
+                            <th>Buyer Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {products.map((product) =>
+                            <tr key={product.product_id}>
+                                <td>{product.product_id}</td>
+                                <td>{product.name}</td>
+                                <td>{product.price}</td>
+                                <td>{product.quantity}</td>
+                                <td>{product.date_of_buying}</td>
+                                <td>{product.buyer_name}</td>
+                                <td>
+                                    <Button className="mr-2" variant="danger"
+                                        onClick={event => handleDelete(event, product.product_id)}>
+                                        <RiDeleteBin5Line />
+                                    </Button>
+                                    <span>&nbsp;&nbsp;&nbsp;</span>
+                                    <Button className="mr-2"
+                                        onClick={event => handleUpdate(event, product)}>
+                                        <FaEdit />
+                                    </Button>
+                                    <UpdateProductModal show={editModalShow} product={editProduct} setUpdated={setIsUpdated}
+                                        onHide={EditModelClose}></UpdateProductModal>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </Table>
+                <ButtonToolbar>
+                    <Button variant="primary" onClick={handleAdd}>
+                        Add Product
+                    </Button>
+                    <AddProductModal show={addModalShow} setUpdated={setIsUpdated}
+                        onHide={AddModelClose}></AddProductModal>
+                </ButtonToolbar>
+            </div>
         </div>
     );
 };
