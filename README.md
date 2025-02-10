@@ -1,65 +1,36 @@
-# smwa-project
-_A simple student management web application with CRUD operations developed in Django and React Js_
+# 📦 Stock Management System
 
-## Requirements
-Make sure you have python and Node js installed on your system:
-- [Python version 3.9.13](https://www.python.org/downloads/release/python-3913/) 
-- [Node version 16.7.1](https://nodejs.org/en/download/)
+A modern **Stock Management System** built with **Django (REST API) for the backend** and **React for the frontend**, using **SQLite**, **Tailwind CSS**, and **Axios**. This application helps businesses efficiently track inventory, manage products, and receive alerts for low stock.
+
+---
+
+## 🚀 Features
+
+✅ **Product Management** – Add, edit, delete products  
+📊 **Dashboard** – View real-time stock statistics  
+🔎 **Search & Filters** – Find products easily  
+🔔 **Low Stock Alerts** – Notifications for critical stock levels  
+👥 **User Management** – Admin & employee roles  
+📄 **Reports** – Export inventory data (PDF/Excel)  
+
+---
+
+## 🛠️ Technologies Used
+
+### **Backend (Django)**
+- **Django REST Framework** – API development  
+- **SQLite** – Lightweight database  
+- **JWT Authentication** – Secure user authentication  
+- **Celery (optional)** – Background tasks  
+
+### **Frontend (React)**
+- **React Router** – Navigation  
+- **Axios** – API requests  
+- **Tailwind CSS** – Modern UI styling  
+
+---
 
 
-## Project Setup
+##🔗 **Contact me**  
+👉 [LinkedIn](https://www.linkedin.com/in/mehdi-dinari-b0487a2a9/)  
 
-- Clone the repository in a local folder
-    ```sh
-    git clone https://github.com/fizaashraf37/smwa-project.git 
-    ```
-- Open terminal and verify python version
-  ```sh
-    python --version
-    ```
-- Verify if node and npm are installed
-  ```sh
-    node --version
-    npm -version
-    ```
-## Setup Backend
-- Nvaigate to cloned project directory
-  ```sh
-    cd smwa-project
-    ```
-- Create a python virtual environment for backend
-  ```sh
-    python3 -m venv myvenv
-    ```
-- Activate the virtual environment
-  ```sh
-  # For winodws
-    myvenv\Scripts\activate
-  # For linux
-    source myvenv/bin/activate
-    ```
-- Install python libraries
-  ```sh
-   cd backend
-   pip install -r requirements.txt
-    ```
-- Start Django server
-  ```sh
-   python manage.py runserver
-    ```
-- Django backend server will start on http://localhost:8000/
-
-## Setup Frontend
-- Open a new terminal and navigate to frontend directory
-  ```sh
-   cd smwa-project/frontend
-    ```
-- Install frontend libraries using npm
-  ```sh
-   npm install
-    ```
-- Start Node server
-  ```sh
-   npm start
-    ```
-- Once node is started you can access the application on http://localhost:3000/
